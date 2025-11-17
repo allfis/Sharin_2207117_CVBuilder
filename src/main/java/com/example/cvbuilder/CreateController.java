@@ -10,7 +10,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.Node;
-
 import java.io.IOException;
 
 public class CreateController {
@@ -37,23 +36,26 @@ public class CreateController {
         }
 
         try {
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/preview.fxml"));
             Parent root = loader.load();
 
+            PreviewController previewController = loader.getController();
+            previewController.setCVData(
+                    fullNameField.getText(),
+                    emailField.getText(),
+                    phoneField.getText(),
+                    addressField.getText(),
+                    educationArea.getText(),
+                    skillsArea.getText(),
+                    experienceArea.getText(),
+                    projectsArea.getText()
+            );
 
-            //PreviewController previewController = loader.getController();
-//           previewController.setCVData(
-//                    fullNameField.getText(),
-//                    emailField.getText(),
-//                    phoneField.getText(),
-//                    addressField.getText(),
-//                    educationArea.getText(),
-//                    skillsArea.getText(),
-//                    experienceArea.getText(),
-//                    projectsArea.getText()
-//            );
-
+            Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+            successAlert.setTitle("CV Generated");
+            successAlert.setHeaderText(null);
+            successAlert.setContentText("CV generated successfully!");
+            successAlert.showAndWait();
 
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
