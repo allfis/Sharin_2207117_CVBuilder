@@ -1,37 +1,67 @@
 package com.example.cvbuilder;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.scene.Node;
+
+import java.io.IOException;
 
 public class CreateController {
 
-    @FXML
-    private TextField fullNameField, emailField, phoneField, addressField,
-            educationField, skillsField, experienceField, projectsField;
+    @FXML private TextField fullNameField;
+    @FXML private TextField emailField;
+    @FXML private TextField phoneField;
+    @FXML private TextField addressField;
+    @FXML private TextArea educationArea;
+    @FXML private TextArea skillsArea;
+    @FXML private TextArea experienceArea;
+    @FXML private TextArea projectsArea;
 
     @FXML
-    public void onGenerate() throws Exception {
-        CV cv = new CV();
-        cv.fullName = fullNameField.getText();
-        cv.email = emailField.getText();
-        cv.phone = phoneField.getText();
-        cv.address = addressField.getText();
-        cv.education = java.util.Arrays.asList(educationField.getText().split(","));
-        cv.skills = java.util.Arrays.asList(skillsField.getText().split(","));
-        cv.experience = java.util.Arrays.asList(experienceField.getText().split(","));
-        cv.projects = java.util.Arrays.asList(projectsField.getText().split(","));
+    private void onGenerateCV(ActionEvent event) {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/preview.fxml"));
-        Parent root = loader.load();
+        if(fullNameField.getText().isEmpty() || emailField.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Missing Information");
+            alert.setHeaderText(null);
+            alert.setContentText("Please enter your Full Name and Email!");
+            alert.showAndWait();
+            return;
+        }
 
-        PreviewController controller = loader.getController();
-        controller.setCV(cv);
+        try {
 
-        Stage stage = (Stage) fullNameField.getScene().getWindow();
-        stage.setScene(new Scene(root));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/preview.fxml"));
+            Parent root = loader.load();
+
+
+            //PreviewController previewController = loader.getController();
+//           previewController.setCVData(
+//                    fullNameField.getText(),
+//                    emailField.getText(),
+//                    phoneField.getText(),
+//                    addressField.getText(),
+//                    educationArea.getText(),
+//                    skillsArea.getText(),
+//                    experienceArea.getText(),
+//                    projectsArea.getText()
+//            );
+
+
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("CV Preview");
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

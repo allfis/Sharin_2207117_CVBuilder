@@ -6,15 +6,25 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.Node;
+import java.io.IOException;
 
 public class HomeController {
 
     @FXML
-    public void onCreate(ActionEvent event) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/create.fxml"));
+    public void onCreate(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/create.fxml"));
+            Parent root = loader.load();
 
-         Stage stage = (Stage)((javafx.scene.Node)event.getSource()).getScene().getWindow();
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Create Your CV");
+            stage.show();
 
-         stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
