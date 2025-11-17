@@ -11,10 +11,10 @@ public class HomeController {
 
     @FXML
     public void onCreate(ActionEvent event) throws Exception {
-        // Load create screen (we will create this next)
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/create.fxml"));
 
-        Stage stage = (Stage)((javafx.scene.Node)event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+         Stage stage = (Stage)((javafx.scene.Node)event.getSource()).getScene().getWindow();
+
+         stage.setScene(new Scene(root));
     }
 }

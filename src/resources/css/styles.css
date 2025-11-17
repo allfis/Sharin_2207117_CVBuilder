@@ -1,12 +1,12 @@
 .title-text {
     -fx-font-size: 28px;
     -fx-font-weight: bold;
-    -fx-fill: #2C3E50; /* Dark blue */
+    -fx-fill: #2C3E50;
 }
 
 .sub-text {
-    -fx-font-size: 16px;
-    -fx-fill: #34495E; /* Slightly lighter blue */
+     -fx-font-size: 16px;
+    -fx-fill: #34495E;
 }
 
 .button {

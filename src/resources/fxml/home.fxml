@@ -11,6 +11,7 @@
         <Insets bottom="40" left="40" right="40" top="40" />
     </padding>
 
+
     <Text styleClass="title-text" text="Welcome to CV Builder">Welcome to CV Builder</Text>
     <Text styleClass="sub-text" text="Let's Build Your Professional CV">
       <font>
