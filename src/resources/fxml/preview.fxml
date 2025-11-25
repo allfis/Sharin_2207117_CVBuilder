@@ -6,42 +6,49 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<ScrollPane stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cvbuilder.PreviewController">
+<ScrollPane stylesheets="@../css/styles.css"
+            xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.cvbuilder.PreviewController">
 
     <VBox spacing="15">
         <padding>
-            <Insets bottom="20" left="20" right="20" top="20" />
+            <Insets top="20" right="20" bottom="20" left="20" />
         </padding>
 
         <VBox spacing="5" styleClass="cv-section">
             <Text styleClass="cv-title" text="Full Name:" />
-            <Text fx:id="nameText" styleClass="cv-text" />
+            <Text fx:id="fullNamePreview" styleClass="cv-text" />
+
             <Text styleClass="cv-title" text="Email Address:" />
-            <Text fx:id="emailText" styleClass="cv-text" />
+            <Text fx:id="emailPreview" styleClass="cv-text" />
+
             <Text styleClass="cv-title" text="Phone Number:" />
-            <Text fx:id="phoneText" styleClass="cv-text" />
+            <Text fx:id="phonePreview" styleClass="cv-text" />
+
             <Text styleClass="cv-title" text="Address:" />
-            <Text fx:id="addressText" styleClass="cv-text" />
+            <Text fx:id="addressPreview" styleClass="cv-text" />
         </VBox>
 
         <VBox spacing="10" styleClass="cv-section">
-            <Text styleClass="cv-title" text="Education Qualifications" />
-            <TextArea fx:id="educationArea" editable="false" wrapText="true" />
+            <Text styleClass="cv-title" text="Education Qualifications"/>
+            <TextArea fx:id="educationPreview" editable="false" wrapText="true" prefRowCount="2" maxHeight="80"/>
         </VBox>
 
         <VBox spacing="10" styleClass="cv-section">
-            <Text styleClass="cv-title" text="Skills" />
-            <TextArea fx:id="skillsArea" editable="false" wrapText="true" />
+            <Text styleClass="cv-title" text="Skills"/>
+            <TextArea fx:id="skillsPreview" editable="false" wrapText="true" prefRowCount="2" maxHeight="80"/>
         </VBox>
 
         <VBox spacing="10" styleClass="cv-section">
-            <Text styleClass="cv-title" text="Work Experience" />
-            <TextArea fx:id="experienceArea" editable="false" wrapText="true" />
+            <Text styleClass="cv-title" text="Work Experience"/>
+            <TextArea fx:id="experiencePreview" editable="false" wrapText="true" prefRowCount="2" maxHeight="80"/>
         </VBox>
 
         <VBox spacing="10" styleClass="cv-section">
-            <Text styleClass="cv-title" text="Projects" />
-            <TextArea fx:id="projectsArea" editable="false" wrapText="true" />
+            <Text styleClass="cv-title" text="Projects"/>
+            <TextArea fx:id="projectsPreview" editable="false" wrapText="true" prefRowCount="2" maxHeight="80"/>
         </VBox>
+
     </VBox>
 </ScrollPane>

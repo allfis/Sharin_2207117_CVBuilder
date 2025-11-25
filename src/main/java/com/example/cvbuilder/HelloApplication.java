@@ -13,8 +13,7 @@ public class HelloApplication extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("CV Builder");
-        stage.getIcons().add(new Image(getClass().getResource("/images/cv_icon.jpg").toString()));
-        stage.setScene(scene);
+         stage.setScene(scene);
          stage.setWidth(800);
         stage.setHeight(600);
         stage.show();

@@ -33,6 +33,7 @@ public class CreateController {
             alert.setContentText("Please enter your Full Name and Email!");
             alert.showAndWait();
             return;
+
         }
 
         try {

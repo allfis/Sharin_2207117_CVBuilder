@@ -7,26 +7,26 @@ import javafx.scene.text.Text;
 public class PreviewController {
 
     @FXML
-    private Text nameText, emailText, phoneText, addressText;
+    private Text fullNamePreview, emailPreview, phonePreview, addressPreview;
 
     @FXML
-    private TextArea educationArea, skillsArea, experienceArea, projectsArea;
+    private TextArea educationPreview, skillsPreview, experiencePreview, projectsPreview;
 
     public void setCVData(String fullName, String email, String phone, String address,
                           String education, String skills, String experience, String projects) {
-        nameText.setText(fullName);
-        emailText.setText(email);
-        phoneText.setText(phone);
-        addressText.setText(address);
+        fullNamePreview.setText(fullName);
+        emailPreview.setText(email);
+        phonePreview.setText(phone);
+        addressPreview.setText(address);
 
-        educationArea.setText(education);
-        skillsArea.setText(skills);
-        experienceArea.setText(experience);
-        projectsArea.setText(projects);
+        educationPreview.setText(education);
+        skillsPreview.setText(skills);
+        experiencePreview.setText(experience);
+        projectsPreview.setText(projects);
 
-        educationArea.setEditable(false);
-        skillsArea.setEditable(false);
-        experienceArea.setEditable(false);
-        projectsArea.setEditable(false);
+        educationPreview.setEditable(false);
+        skillsPreview.setEditable(false);
+        experiencePreview.setEditable(false);
+        projectsPreview.setEditable(false);
     }
 }
