@@ -1,5 +1,6 @@
 package com.example.cvbuilder;
 
+import com.example.cvbuilder.database.DatabaseHelper;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -10,21 +11,16 @@ import java.io.File;
 
 public class PreviewController {
 
-    @FXML private Text fullNameText;
-    @FXML private Text emailText;
-    @FXML private Text phoneText;
-    @FXML private Text addressText;
-
-    @FXML private TextArea educationArea;
-    @FXML private TextArea skillsArea;
-    @FXML private TextArea experienceArea;
-    @FXML private TextArea projectsArea;
-
+    @FXML private Text fullNameText, emailText, phoneText, addressText;
+    @FXML private TextArea educationArea, skillsArea, experienceArea, projectsArea;
     @FXML private ImageView profileImageView;
 
+    private final DatabaseHelper dbHelper = new DatabaseHelper();
+
+    // Set data from Create page
     public void setCVData(String fullName, String email, String phone, String address,
                           String education, String skills, String experience, String projects,
-                          File profileImage) {
+                          String imagePath) {
 
         fullNameText.setText(fullName);
         emailText.setText(email);
@@ -41,9 +37,29 @@ public class PreviewController {
         experienceArea.setEditable(false);
         projectsArea.setEditable(false);
 
-        if (profileImage != null) {
-            Image image = new Image(profileImage.toURI().toString());
-            profileImageView.setImage(image);
+        // Display image from path
+        if (imagePath != null && !imagePath.isEmpty()) {
+            File file = new File(imagePath);
+            if (file.exists()) {
+                profileImageView.setImage(new Image(file.toURI().toString()));
+            }
         }
+    }
+
+    // Delete CV
+    @FXML
+    private void onDeleteCV() {
+        String email = emailText.getText();
+        dbHelper.deleteCV(email);
+
+        fullNameText.setText("");
+        emailText.setText("");
+        phoneText.setText("");
+        addressText.setText("");
+        educationArea.clear();
+        skillsArea.clear();
+        experienceArea.clear();
+        projectsArea.clear();
+        profileImageView.setImage(null);
     }
 }

@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
@@ -17,13 +16,6 @@
         <padding>
             <Insets top="20" right="20" bottom="20" left="20"/>
         </padding>
-
-        <!-- Profile Picture -->
-        <VBox spacing="10" styleClass="cv-section" alignment="CENTER">
-            <Text styleClass="cv-title" text="Profile Picture"/>
-            <ImageView fx:id="profileImageView" fitWidth="140" fitHeight="140" preserveRatio="true"
-                       style="-fx-border-color: #BDC3C7; -fx-border-width: 1; -fx-padding: 5;"/>
-        </VBox>
 
         <!-- Personal Info Section -->
         <VBox spacing="5" styleClass="cv-section">

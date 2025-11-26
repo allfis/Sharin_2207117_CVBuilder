@@ -1,8 +1,10 @@
 package com.example.cvbuilder;
 
+import com.example.cvbuilder.database.DatabaseHelper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -12,7 +14,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.scene.Node;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,9 +31,10 @@ public class CreateController {
     @FXML private TextArea projectsArea;
     @FXML private ImageView profileImageView;
 
-    private File selectedImageFile;
+    private String selectedImagePath = "";   // store path for database
+    private final DatabaseHelper dbHelper = new DatabaseHelper();
 
-    // STEP 1: Upload photo
+    // Upload profile photo
     @FXML
     private void onUploadPhoto(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
@@ -43,36 +45,38 @@ public class CreateController {
 
         File file = fileChooser.showOpenDialog(null);
         if (file != null) {
-            selectedImageFile = file;
+            selectedImagePath = file.getAbsolutePath();
             Image image = new Image(file.toURI().toString());
             profileImageView.setImage(image);
         }
     }
 
-    // STEP 2: Generate CV with validations
+    // Create or Update CV
     @FXML
     private void onGenerateCV(ActionEvent event) {
-
         String fullName = fullNameField.getText().trim();
         String email = emailField.getText().trim();
         String phone = phoneField.getText().trim();
 
-        // Basic validations
-        if(fullName.isEmpty() || email.isEmpty() || phone.isEmpty()) {
-            showAlert("Missing Information", "Full Name, Email and Phone are required!");
+        if (fullName.isEmpty() || email.isEmpty() || phone.isEmpty()) {
+            showAlert("Missing Information", "Full Name, Email, and Phone are required!");
             return;
         }
 
-        if(!isValidEmail(email)) {
+        if (!isValidEmail(email)) {
             showAlert("Invalid Email", "Please enter a valid email in format name@gmail.com");
             return;
         }
 
-        if(!isInteger(phone)) {
+        if (!isInteger(phone)) {
             showAlert("Invalid Phone", "Phone number must contain only digits!");
             return;
         }
 
+        // Save to database
+        saveCVToDatabase(fullName, email, phone);
+
+        // Load Preview page
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/preview.fxml"));
             Parent root = loader.load();
@@ -87,10 +91,10 @@ public class CreateController {
                     skillsArea.getText(),
                     experienceArea.getText(),
                     projectsArea.getText(),
-                    selectedImageFile // pass selected image
+                    selectedImagePath // pass path as String
             );
 
-            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("CV Preview");
             stage.show();
@@ -100,22 +104,33 @@ public class CreateController {
         }
     }
 
-    // HELPER: Alert
+    private void saveCVToDatabase(String fullName, String email, String phone) {
+        String address = addressField.getText().trim();
+        String education = educationArea.getText();
+        String skills = skillsArea.getText();
+        String experience = experienceArea.getText();
+        String projects = projectsArea.getText();
+
+        if (dbHelper.cvExists(email)) {
+            dbHelper.updateCV(fullName, email, phone, address, education, skills, experience, projects, selectedImagePath);
+        } else {
+            dbHelper.insertCV(fullName, email, phone, address, education, skills, experience, projects, selectedImagePath);
+        }
+    }
+
     private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
 
-    // HELPER: Validate email
     private boolean isValidEmail(String email) {
         String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         return Pattern.matches(regex, email);
     }
 
-    // HELPER: Check integer
     private boolean isInteger(String str) {
         return str.matches("\\d+");
     }
