@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
 
@@ -10,16 +11,18 @@
             fx:controller="com.example.cvbuilder.CreateController"
             stylesheets="@../css/styles.css">
 
+    <!-- TOP SECTION -->
     <top>
-        <VBox spacing="5" alignment="CENTER">
-            <Text text="Create Your CV" styleClass="title-text"/>
-            <Text text="Fill in your details below" styleClass="sub-text"/>
+        <VBox alignment="CENTER" spacing="5">
             <padding>
                 <Insets top="20" right="20" bottom="20" left="20"/>
             </padding>
+            <Text text="Create Your CV" styleClass="title-text"/>
+            <Text text="Fill in your details below" styleClass="sub-text"/>
         </VBox>
     </top>
 
+    <!-- CENTER SECTION -->
     <center>
         <ScrollPane fitToWidth="true">
             <VBox spacing="15">
@@ -27,9 +30,19 @@
                     <Insets top="20" right="20" bottom="20" left="20"/>
                 </padding>
 
+                <!-- PROFILE IMAGE SECTION -->
+                <VBox spacing="10" alignment="CENTER" styleClass="cv-section">
+                    <Text text="Profile Picture" styleClass="cv-title"/>
+                    <ImageView fx:id="profileImageView"
+                               fitWidth="140" fitHeight="140"
+                               preserveRatio="true"
+                               style="-fx-border-color: #BDC3C7; -fx-border-width: 1; -fx-padding: 5;"/>
+                    <Button text="Upload Photo" onAction="#onUploadPhoto" styleClass="button"/>
+                </VBox>
+
+                <!-- PERSONAL INFO -->
                 <VBox spacing="10" styleClass="cv-section">
                     <Text text="Personal Information" styleClass="cv-title"/>
-
                     <GridPane hgap="10" vgap="10">
                         <columnConstraints>
                             <ColumnConstraints halignment="RIGHT"/>
@@ -49,21 +62,26 @@
                         <TextField fx:id="addressField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
                     </GridPane>
                 </VBox>
+
+                <!-- EDUCATION -->
                 <VBox spacing="10" styleClass="cv-section">
                     <Text text="Education" styleClass="cv-title"/>
                     <TextArea fx:id="educationArea" prefRowCount="3"/>
                 </VBox>
+
+                <!-- SKILLS -->
                 <VBox spacing="10" styleClass="cv-section">
                     <Text text="Skills" styleClass="cv-title"/>
                     <TextArea fx:id="skillsArea" prefRowCount="3"/>
                 </VBox>
 
+                <!-- EXPERIENCE -->
                 <VBox spacing="10" styleClass="cv-section">
                     <Text text="Work Experience" styleClass="cv-title"/>
                     <TextArea fx:id="experienceArea" prefRowCount="3"/>
                 </VBox>
 
-
+                <!-- PROJECTS -->
                 <VBox spacing="10" styleClass="cv-section">
                     <Text text="Projects" styleClass="cv-title"/>
                     <TextArea fx:id="projectsArea" prefRowCount="3"/>
@@ -72,6 +90,7 @@
         </ScrollPane>
     </center>
 
+    <!-- BOTTOM BUTTON -->
     <bottom>
         <VBox alignment="CENTER">
             <padding>

@@ -8,9 +8,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.Node;
+
+import java.io.File;
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 public class CreateController {
 
@@ -22,18 +28,49 @@ public class CreateController {
     @FXML private TextArea skillsArea;
     @FXML private TextArea experienceArea;
     @FXML private TextArea projectsArea;
+    @FXML private ImageView profileImageView;
 
+    private File selectedImageFile;
+
+    // STEP 1: Upload photo
+    @FXML
+    private void onUploadPhoto(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Profile Picture");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
+        );
+
+        File file = fileChooser.showOpenDialog(null);
+        if (file != null) {
+            selectedImageFile = file;
+            Image image = new Image(file.toURI().toString());
+            profileImageView.setImage(image);
+        }
+    }
+
+    // STEP 2: Generate CV with validations
     @FXML
     private void onGenerateCV(ActionEvent event) {
 
-        if(fullNameField.getText().isEmpty() || emailField.getText().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Missing Information");
-            alert.setHeaderText(null);
-            alert.setContentText("Please enter your Full Name and Email!");
-            alert.showAndWait();
-            return;
+        String fullName = fullNameField.getText().trim();
+        String email = emailField.getText().trim();
+        String phone = phoneField.getText().trim();
 
+        // Basic validations
+        if(fullName.isEmpty() || email.isEmpty() || phone.isEmpty()) {
+            showAlert("Missing Information", "Full Name, Email and Phone are required!");
+            return;
+        }
+
+        if(!isValidEmail(email)) {
+            showAlert("Invalid Email", "Please enter a valid email in format name@gmail.com");
+            return;
+        }
+
+        if(!isInteger(phone)) {
+            showAlert("Invalid Phone", "Phone number must contain only digits!");
+            return;
         }
 
         try {
@@ -42,21 +79,16 @@ public class CreateController {
 
             PreviewController previewController = loader.getController();
             previewController.setCVData(
-                    fullNameField.getText(),
-                    emailField.getText(),
-                    phoneField.getText(),
-                    addressField.getText(),
+                    fullName,
+                    email,
+                    phone,
+                    addressField.getText().trim(),
                     educationArea.getText(),
                     skillsArea.getText(),
                     experienceArea.getText(),
-                    projectsArea.getText()
+                    projectsArea.getText(),
+                    selectedImageFile // pass selected image
             );
-
-            Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-            successAlert.setTitle("CV Generated");
-            successAlert.setHeaderText(null);
-            successAlert.setContentText("CV generated successfully!");
-            successAlert.showAndWait();
 
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -66,5 +98,25 @@ public class CreateController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // HELPER: Alert
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    // HELPER: Validate email
+    private boolean isValidEmail(String email) {
+        String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        return Pattern.matches(regex, email);
+    }
+
+    // HELPER: Check integer
+    private boolean isInteger(String str) {
+        return str.matches("\\d+");
     }
 }
