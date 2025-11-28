@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17.0.12"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.cvbuilder.PreviewAllController"
+      spacing="15"
+      alignment="TOP_CENTER"
+      stylesheets="@../css/styles.css">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- Title -->
+    <Text text="All CVs" styleClass="title-text"/>
+
+    <!-- TableView -->
+    <TableView fx:id="cvTable" prefWidth="800">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID" prefWidth="50"/>
+            <TableColumn fx:id="nameColumn" text="Full Name" prefWidth="150"/>
+            <TableColumn fx:id="emailColumn" text="Email" prefWidth="150"/>
+            <TableColumn fx:id="phoneColumn" text="Phone" prefWidth="100"/>
+            <TableColumn fx:id="addressColumn" text="Address" prefWidth="150"/>
+            <TableColumn fx:id="educationColumn" text="Education" prefWidth="150"/>
+            <TableColumn fx:id="skillsColumn" text="Skills" prefWidth="150"/>
+            <TableColumn fx:id="experienceColumn" text="Experience" prefWidth="150"/>
+            <TableColumn fx:id="projectsColumn" text="Projects" prefWidth="150"/>
+        </columns>
+    </TableView>
+
+    <!-- Refresh Button -->
+    <Button text="Refresh" styleClass="purple-button" onAction="#onRefreshCVs"/>
+</VBox>

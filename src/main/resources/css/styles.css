@@ -72,3 +72,21 @@
     -fx-font-size: 14px;
     -fx-text-fill: #34495E;
 }
+.purple-button {
+    -fx-background-color: #7b2cbf;   /* Purple */
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8 20;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6;
+}
+
+.subtitle-text {
+    -fx-font-size: 16px;
+    -fx-text-fill: #4C4C4C;    /sub-title/
+}
+
+
+.purple-button:hover {
+    -fx-background-color: #9d4edd;   /* Lighter purple */
+}

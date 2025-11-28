@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" spacing="20"
+      stylesheets="@../css/styles.css"
+      xmlns="http://javafx.com/javafx/17.0.12"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.cvbuilder.HomeController">
+
+    <padding>
+        <Insets top="60" bottom="60" left="40" right="40"/>
+    </padding>
+
+    <!-- Title -->
+    <Text styleClass="title-text" text="CV Builder"/>
+
+    <!-- Subtitle -->
+    <Text styleClass="subtitle-text" text="Create. Customize. Stand out."/>
+
+    <!-- Buttons horizontally aligned -->
+    <HBox alignment="CENTER" spacing="25">
+        <Button onAction="#onCreateCV" text="Create CV" styleClass="purple-button"/>
+        <Button onAction="#onUpdateDeleteCV" text="Update/Delete CV" styleClass="purple-button"/>
+        <Button onAction="#onPreviewCVs" text="Preview CVs" styleClass="purple-button"/>
+    </HBox>
+
+</VBox>

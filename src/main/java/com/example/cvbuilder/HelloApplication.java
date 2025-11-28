@@ -10,24 +10,27 @@ import javafx.stage.Stage;
 
 public class HelloApplication extends Application {
 
-    private final DatabaseHelper dbHelper = new DatabaseHelper();
 
     @Override
     public void start(Stage stage) throws Exception {
-        // Initialize database tables at launch
-        dbHelper.createTable();  // ensures table is ready
+        // Ensure database table exists
+        DatabaseHelper dbHelper = new DatabaseHelper(); // table is automatically created here
 
-        // Load the Home FXML page
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
+        // Load Home.fxml from classpath
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Home.fxml"));
+        Parent root = loader.load();
 
         Scene scene = new Scene(root);
-        stage.setTitle("CV Builder");
-        stage.setWidth(800);
-        stage.setHeight(600);
 
-        // Set application icon (optional)
-        Image icon = new Image(getClass().getResource("/images/cv_icon.jpg").toString());
-        stage.getIcons().add(icon);
+        stage.setTitle("CV Builder");
+
+        // Optional icon
+        try {
+            Image icon = new Image(getClass().getResourceAsStream("/icons/app_icon.png"));
+            stage.getIcons().add(icon);
+        } catch (Exception e) {
+            System.out.println("Icon not found — continuing without it.");
+        }
 
         stage.setScene(scene);
         stage.show();
