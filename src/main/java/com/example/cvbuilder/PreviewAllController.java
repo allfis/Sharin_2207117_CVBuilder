@@ -8,7 +8,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.sql.ResultSet;
+import java.util.List;
 
 public class PreviewAllController {
 
@@ -47,22 +47,9 @@ public class PreviewAllController {
     }
 
     private void loadCVs() {
-        ObservableList<CV> list = FXCollections.observableArrayList();
         try {
-            ResultSet rs = dbHelper.getAllCVs();
-            while (rs.next()) {
-                list.add(new CV(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("email"),
-                        rs.getString("phone"),
-                        rs.getString("address"),
-                        rs.getString("education"),
-                        rs.getString("skills"),
-                        rs.getString("experience"),
-                        rs.getString("projects")
-                ));
-            }
+            List<CV> cvList = dbHelper.getAllCVs();  // Now returns List<CV>
+            ObservableList<CV> list = FXCollections.observableArrayList(cvList);
             cvTable.setItems(list);
         } catch (Exception e) {
             e.printStackTrace();

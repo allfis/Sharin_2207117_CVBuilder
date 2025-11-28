@@ -25,6 +25,20 @@ public class CV {
         this.projects = projects;
     }
 
+    public CV(String name, String email, String phone, String address,
+              String education, String skills, String experience, String projects) {
+        this.id = -1; // or 0 or some default
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.education = education;
+        this.skills = skills;
+        this.experience = experience;
+        this.projects = projects;
+    }
+
+
     public int getId() { return id; }
     public String getName() { return name; }
     public String getEmail() { return email; }

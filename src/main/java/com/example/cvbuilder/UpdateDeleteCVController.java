@@ -5,8 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-
-import java.sql.ResultSet;
 import java.util.regex.Pattern;
 
 public class UpdateDeleteCVController {
@@ -38,6 +36,7 @@ public class UpdateDeleteCVController {
     }
 
     // Search CV by email and populate fields
+    // Search CV by email
     @FXML
     private void onSearchCV() {
         String email = searchEmailField.getText().trim();
@@ -46,54 +45,51 @@ public class UpdateDeleteCVController {
             return;
         }
 
-        try {
-            ResultSet rs = dbHelper.getCVByEmail(email);
-            if (rs.next()) {
-                // Populate fields
-                nameField.setText(rs.getString("name"));
-                emailField.setText(rs.getString("email"));
-                phoneField.setText(rs.getString("phone"));
-                addressField.setText(rs.getString("address"));
-                educationField.setText(rs.getString("education"));
-                skillsField.setText(rs.getString("skills"));
-                experienceField.setText(rs.getString("experience"));
-                projectsField.setText(rs.getString("projects"));
-            } else {
-                showAlert("Not Found", "No CV found for the given email.");
-            }
-        } catch (Exception e) {
-            showAlert("Error", "Failed to fetch CV: " + e.getMessage());
+        CV cv = dbHelper.getCVByEmail(email);
+        if (cv != null) {
+            nameField.setText(cv.getName());
+            emailField.setText(cv.getEmail());
+            phoneField.setText(cv.getPhone());
+            addressField.setText(cv.getAddress());
+            educationField.setText(cv.getEducation());
+            skillsField.setText(cv.getSkills());
+            experienceField.setText(cv.getExperience());
+            projectsField.setText(cv.getProjects());
+        } else {
+            showAlert("Not Found", "No CV found for the given email.");
         }
     }
 
-    // Update the CV in the database
+    // Update CV
     @FXML
     private void onUpdateCV() {
         try {
-            String name = nameField.getText().trim();
-            String email = emailField.getText().trim();
-            String phone = phoneField.getText().trim();
-            String address = addressField.getText().trim();
-            String education = educationField.getText().trim();
-            String skills = skillsField.getText().trim();
-            String experience = experienceField.getText().trim();
-            String projects = projectsField.getText().trim();
+            CV cv = new CV(
+                    nameField.getText().trim(),
+                    emailField.getText().trim(),
+                    phoneField.getText().trim(),
+                    addressField.getText().trim(),
+                    educationField.getText().trim(),
+                    skillsField.getText().trim(),
+                    experienceField.getText().trim(),
+                    projectsField.getText().trim()
+            );
 
-            if (name.isEmpty()) {
+            if (cv.getName().isEmpty()) {
                 showAlert("Validation Error", "Full Name is required.");
                 return;
             }
-            if (email.isEmpty() || !emailPattern.matcher(email).matches()) {
+            if (cv.getEmail().isEmpty() || !emailPattern.matcher(cv.getEmail()).matches()) {
                 showAlert("Validation Error", "Invalid Email Address.");
                 return;
             }
-            if (!phone.isEmpty() && !phonePattern.matcher(phone).matches()) {
+            if (!cv.getPhone().isEmpty() && !phonePattern.matcher(cv.getPhone()).matches()) {
                 showAlert("Validation Error", "Phone number must be digits.");
                 return;
             }
 
-            int rows = dbHelper.updateCV(name, email, phone, address, education, skills, experience, projects);
-            if (rows > 0) {
+            boolean updated = dbHelper.updateCV(cv);
+            if (updated) {
                 showAlert("Success", "CV updated successfully.");
             } else {
                 showAlert("Error", "No CV found to update.");

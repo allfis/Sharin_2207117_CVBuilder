@@ -47,31 +47,44 @@ public class CreateCVController {
             String experience = experienceField.getText().trim();
             String projects = projectsField.getText().trim();
 
+            // Validation
             if (name.isEmpty()) {
                 showAlert("Validation Error", "Full Name is required.");
                 return;
             }
 
-            if (email.isEmpty()) {
-                showAlert("Validation Error", "Email Address is required.");
-                return;
-            }
-
-            if (!emailPattern.matcher(email).matches()) {
+            if (email.isEmpty() || !emailPattern.matcher(email).matches()) {
                 showAlert("Validation Error", "Invalid Email Address.");
                 return;
             }
 
             if (!phone.isEmpty() && !phonePattern.matcher(phone).matches()) {
-                showAlert("Validation Error", "Invalid Phone Number");
+                showAlert("Validation Error", "Invalid Phone Number.");
                 return;
             }
 
-            dbHelper.insertCV(name, email, phone, address, education, skills, experience, projects);
+            // Create a CV object
+            CV cv = new CV(
+                    0, // id is 0; database can auto-generate if needed
+                    name,
+                    email,
+                    phone,
+                    address,
+                    education,
+                    skills,
+                    experience,
+                    projects
+            );
 
-            showAlert("Success", "CV inserted Successfully");
+            // Insert CV using DatabaseHelper
+            boolean inserted = dbHelper.insertCV(cv);
 
-            clearFields();
+            if (inserted) {
+                showAlert("Success", "CV inserted successfully.");
+                clearFields();
+            } else {
+                showAlert("Error", "Failed to insert CV.");
+            }
 
         } catch (Exception e) {
             showAlert("Error", "Failed to insert CV: " + e.getMessage());
