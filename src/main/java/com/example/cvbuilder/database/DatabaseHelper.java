@@ -89,7 +89,7 @@ public class DatabaseHelper {
         return false;
     }
 
-    // Delete CV by email
+    //  Delete CV by email
     public boolean deleteCVByEmail(String email) {
         String sql = "DELETE FROM cv WHERE email = ?";
         try (Connection conn = connect();

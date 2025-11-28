@@ -27,7 +27,7 @@ public class CreateCVController {
 
     @FXML
     private void initialize() {
-        // Restrict phoneField to digits only
+        // Restrict phoneField to digits onlyy
         phoneField.textProperty().addListener((obs, oldText, newText) -> {
             if (!newText.matches("\\d*")) {
                 phoneField.setText(newText.replaceAll("[^\\d]", ""));

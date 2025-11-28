@@ -19,7 +19,7 @@
     <!-- Title -->
     <Text text="All CVs" styleClass="title-text"/>
 
-    <!-- TableView -->
+    <!--  TableView -->
     <TableView fx:id="cvTable" prefWidth="800">
         <columns>
             <TableColumn fx:id="idColumn" text="ID" prefWidth="50"/>

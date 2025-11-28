@@ -39,7 +39,7 @@
             <Label text="Email Address:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
             <TextField fx:id="emailField" promptText="Enter email address" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-            <!-- Phone Number -->
+            <!-- Phone Number  -->
             <Label text="Phone Number:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
             <TextField fx:id="phoneField" promptText="Enter phone number (digits only)" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 

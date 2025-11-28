@@ -48,11 +48,12 @@ public class PreviewAllController {
 
     private void loadCVs() {
         try {
-            List<CV> cvList = dbHelper.getAllCVs();  // Now returns List<CV>
+            List<CV> cvList = dbHelper.getAllCVs();  //  Now returns List<CV>
             ObservableList<CV> list = FXCollections.observableArrayList(cvList);
             cvTable.setItems(list);
         } catch (Exception e) {
             e.printStackTrace();
+
         }
     }
 }

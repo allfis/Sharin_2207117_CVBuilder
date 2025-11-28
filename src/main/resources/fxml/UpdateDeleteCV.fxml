@@ -19,6 +19,7 @@
         <!-- Title -->
         <Text text="Update / Delete CV" styleClass="title-text"/>
 
+
         <!-- Search Section -->
         <HBox spacing="10" alignment="CENTER">
             <Label text="Search by Email:"/>
